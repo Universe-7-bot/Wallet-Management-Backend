@@ -50,7 +50,7 @@ describe("Auth Controller", () => {
 
       await register(req, res);
 
-      console.log(res.json.mock.calls[0][0]);
+      // console.log(res.json.mock.calls[0][0]);
 
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith(
