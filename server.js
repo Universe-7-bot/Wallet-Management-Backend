@@ -11,7 +11,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 connectDB();
 
-app.use(cors());
+// app.use(cors());
 
 // FOR DEPLOYMENT
 // const allowedOrigins = ["https://cypherwallet.netlify.app"];
@@ -23,7 +23,18 @@ app.use(cors());
 //   })
 // );
 
+app.use(
+  cors({
+    origin: "https://cypherwallet.netlify.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+
+app.options("*", cors());
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -39,7 +50,9 @@ app.use("/api/user", userRoutes);
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (err) => {
   console.error(`Error: ${err.message}`);
-  process.exit(1);
+  if (process.env.NODE_ENV !== "production") {
+    process.exit(1);
+  }
 });
 
-// module.exports = app;
+module.exports = app;
