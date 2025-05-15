@@ -11,25 +11,18 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 connectDB();
 
-// app.use(cors());
+app.use(cors());
 
 // FOR DEPLOYMENT
-const allowedOrigins = ["https://cypherwallet.netlify.app"];
+// const allowedOrigins = ["https://cypherwallet.netlify.app"];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://cypherwallet.netlify.app",
+//     credentials: true,
+//   })
+// );
 
-app.options("*", cors());
 app.use(express.json());
 
 // Routes
@@ -49,4 +42,4 @@ process.on("unhandledRejection", (err) => {
   process.exit(1);
 });
 
-module.exports = app;
+// module.exports = app;
